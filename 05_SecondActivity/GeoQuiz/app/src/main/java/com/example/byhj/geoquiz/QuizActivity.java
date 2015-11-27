@@ -24,6 +24,8 @@ public class QuizActivity extends AppCompatActivity {
     private static final String TAG = "QuizActivity";
     private static final String KEY_INDEX = "index";
 
+    private boolean mIsCheater;
+
     private Question[] mQuestionBank = new Question[]
             {
                     new Question(R.string.question_oceans, true),
@@ -33,6 +35,13 @@ public class QuizActivity extends AppCompatActivity {
 
     private int mCurrentIndex = 0;
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (data == NULL)
+            return;
+        mIsCheater = data.getBooleanExtra(CheatActivity.EXTRA_ANSWRE_SHOWN, false);
+    }
     private void updateQuestion()
     {
       //  Log.d(TAG, "Updating question text for quesiont #" + mCurrentIndex, new Exception());
@@ -44,7 +53,13 @@ public class QuizActivity extends AppCompatActivity {
     {
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
         int messageResId = 0;
-        if (userPressedTrue == answerIsTrue)
+
+        if (mIsCheater)
+        {
+            messageResId = R.string.judgment_toast;
+
+        }
+        else if (userPressedTrue == answerIsTrue)
         {
             messageResId = R.string.correct_toast;
         }
@@ -120,6 +135,7 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                mIsCheater = false;
                 updateQuestion();
             }
         });
@@ -132,7 +148,11 @@ public class QuizActivity extends AppCompatActivity {
             {
                 //Start CheatActivity
                 Intent i = new Intent(QuizActivity.this, CheatActivity.class);
-                startActivity(i);
+                boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
+                i.putExtra(CheatActivity.EXTRA_ANSWRE_IS_TRUE, answerIsTrue);
+
+               // startActivity(i);
+                startActivityForResult(i, 0);
             }
         });
 
