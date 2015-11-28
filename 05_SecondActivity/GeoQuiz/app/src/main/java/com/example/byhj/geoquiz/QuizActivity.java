@@ -38,9 +38,9 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if (data == NULL)
+        if (data == null)
             return;
-        mIsCheater = data.getBooleanExtra(CheatActivity.EXTRA_ANSWRE_SHOWN, false);
+        mIsCheater = data.getBooleanExtra(CheatActivity.EXTRA_ANSWER_SHOWN, false);
     }
     private void updateQuestion()
     {
@@ -149,7 +149,7 @@ public class QuizActivity extends AppCompatActivity {
                 //Start CheatActivity
                 Intent i = new Intent(QuizActivity.this, CheatActivity.class);
                 boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
-                i.putExtra(CheatActivity.EXTRA_ANSWRE_IS_TRUE, answerIsTrue);
+                i.putExtra(CheatActivity.EXTRA_ANSWER_IS_TRUE, answerIsTrue);
 
                // startActivity(i);
                 startActivityForResult(i, 0);
