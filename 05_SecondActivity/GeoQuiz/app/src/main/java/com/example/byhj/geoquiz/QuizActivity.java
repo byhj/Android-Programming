@@ -16,13 +16,15 @@ public class QuizActivity extends AppCompatActivity {
 
     private Button mTrueButton;
     private Button mFalseButton;
+    private Button mCheatButton;
     private ImageButton mPrevButton;
     private ImageButton mNextButton;
-    private Button mCheatButton;
+
 
     private TextView mQuestionTextView;
     private static final String TAG = "QuizActivity";
     private static final String KEY_INDEX = "index";
+    private static final String KEY_ISCHEATER = "isCheater";
 
     private boolean mIsCheater;
 
@@ -159,6 +161,7 @@ public class QuizActivity extends AppCompatActivity {
         if (savedInstanceState != null)
         {
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+            mIsCheater    = savedInstanceState.getBoolean(KEY_ISCHEATER);
         }
         updateQuestion();
     }
@@ -200,6 +203,7 @@ public class QuizActivity extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
         Log.i(TAG, "onSaveInstanceState");
         savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+        savedInstanceState.putBoolean(KEY_ISCHEATER, mIsCheater);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

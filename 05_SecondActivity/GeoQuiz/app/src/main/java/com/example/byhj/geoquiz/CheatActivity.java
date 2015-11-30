@@ -8,15 +8,22 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Button;
 import android.content.Intent;
+import android.util.Log;
 
 public class CheatActivity extends AppCompatActivity {
 
     public static final String EXTRA_ANSWER_IS_TRUE = "com.byhj.android.geoquiz.answer_is_true";
     public static final String EXTRA_ANSWER_SHOWN = "com.byhj.android.geoquiz.answer_shown";
 
+
+    private static final String TAG = "CheatActivity";
+    private static final String KEY_ISCHEAT= "isCheat";
+
     private boolean mAnswerIsTrue;
     private TextView mAnswerTextView;
     private Button mShowAnswer;
+    private boolean mIsCheat = false;
+
 
     private void setAnswerShownResult(boolean isAnswerShown)
     {
@@ -32,25 +39,28 @@ public class CheatActivity extends AppCompatActivity {
         mAnswerIsTrue = getIntent().getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false);
 
         mAnswerTextView = (TextView)findViewById(R.id.answer_text_view);
-        setAnswerShownResult(false);
+        setAnswerShownResult(mIsCheat);
 
         mShowAnswer = (Button)findViewById(R.id.show_answer_button);
         mShowAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (mAnswerIsTrue)
-                {
+                if (mAnswerIsTrue) {
                     mAnswerTextView.setText(R.string.true_button);
-                }
-                else
-                {
+                } else {
                     mAnswerTextView.setText(R.string.false_button);
                 }
-                setAnswerShownResult(true);
+                mIsCheat = true;
+                setAnswerShownResult(mIsCheat);
             }
         });
 
+        if (savedInstanceState != null)
+        {
+            mIsCheat = savedInstanceState.getBoolean(KEY_ISCHEAT);
+            setAnswerShownResult(mIsCheat);
+        }
     }
 
     @Override
@@ -73,5 +83,13 @@ public class CheatActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        savedInstanceState.putBoolean(KEY_ISCHEAT, mIsCheat);
     }
 }
