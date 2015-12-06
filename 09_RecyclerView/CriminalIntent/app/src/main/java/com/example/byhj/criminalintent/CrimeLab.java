@@ -1,11 +1,13 @@
 package com.example.byhj.criminalintent;
 
 import android.content.Context;
+
 import java.lang.reflect.Array;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.UUID;
 import java.util.ArrayList;
+import java.lang.String;
 
 /**
  * Created by byhj on 2015/12/1.
@@ -25,7 +27,7 @@ public class CrimeLab {
         for (int i = 0; i < 100; i++)
         {
             Crime crime = new Crime();
-            crime.setTitle("Crime  #" + i);
+            crime.setmTitle("Crime  #" + i );
             crime.setmSolved(i % 2 == 0);
             mCrimes.add(crime);
         }
