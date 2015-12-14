@@ -20,7 +20,7 @@ import java.util.List;
 
 public class CrimeListFragment extends Fragment{
     private RecyclerView mCrimeRecyclerView;
-    private CrimeAdatper mAdapter;
+    private CrimeAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,15 +63,15 @@ public class CrimeListFragment extends Fragment{
 
         public void bindCrime(Crime crime) {
             mCrime = crime;
-            mTitleTextView.setText(mCrime.getTitle());
-            mDateTextView.setText(mCrime.getDate().toString());
-            mSolvedCheckBox.setChecked(mCrime.isSolved());
+            mTitleTextView.setText(mCrime.getmTitle());
+            mDateTextView.setText(mCrime.getmDate().toString());
+            mSolvedCheckBox.setChecked(mCrime.ismSolved());
         }
 
         @Override
         public void onClick(View v) {
             Toast.makeText(getActivity(),
-                    mCrime.getTitle() + " clicked!", Toast.LENGTH_SHORT)
+                    mCrime.getmTitle() + " clicked!", Toast.LENGTH_SHORT)
                     .show();
         }
     }
